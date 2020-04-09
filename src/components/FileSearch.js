@@ -1,11 +1,12 @@
 import React, { useState, useEffect,useRef } from 'react'
 import { Button, Input } from 'antd';
+import './FileSearch.scss'
 
 const FileSearch = (props) => {
 	const { title, onFileSearch } = props
 	const [inputActive, setInputActive] = useState(false);
 	const [value, setValue] = useState('');
-  const countRef = useRef(null);
+  	const countRef = useRef(null);
 
 	useEffect(() => {
 		const keyUpHandler = (props) => {
