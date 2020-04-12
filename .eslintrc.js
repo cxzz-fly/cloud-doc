@@ -1,3 +1,4 @@
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 module.exports = {
   env: {
     browser: true,
@@ -414,6 +415,9 @@ module.exports = {
       }
     ],
     // 禁止未使用的变量
-    'no-unused-vars': 0
+    'no-unused-vars': 0,
+    // 'no-debugger': 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
 };

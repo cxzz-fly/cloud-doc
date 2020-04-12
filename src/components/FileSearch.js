@@ -1,56 +1,84 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input } from 'antd';
-import './FileSearch.scss'
-
+import PropTypes from 'prop-types';
+import './FileSearch.scss';
+console.log('process.env.NODE_ENV2222222', process.env.NODE_ENV);
 const FileSearch = (props) => {
-  const { title, onFileSearch } = props
+  const { title, onFileSearch } = props;
   const [inputActive, setInputActive] = useState(false);
   const [value, setValue] = useState('');
   const countRef = useRef(null);
+  const [keyCode, setKeyCode] = useState('');
+
+  const keyUpHandler = ({ key }) => {
+    setKeyCode(key);
+  };
 
   useEffect(() => {
-    if (props?.key == 'Enter' && inputActive) {
-      setInputActive(false)
-      onFileSearch(value)
+    if (keyCode === 'Enter' && inputActive) {
+      onFileSearch(value);
     }
-    if (props?.key == 'Escape' && inputActive) {
-      setInputActive(false)
+    if (keyCode === 'Escape' && inputActive) {
+      setInputActive(false);
     }
-    document.addEventListener('keyup', keyUpHandler)
+    setKeyCode('');
+    document.addEventListener('keyup', keyUpHandler);
     return () => {
-      document.removeEventListener('keyup', keyUpHandler)
-    }
-  })
+      document.removeEventListener('keyup', keyUpHandler);
+    };
+  });
 
   useEffect(() => {
     inputActive && countRef.current.focus();
-  }, [inputActive])
+  }, [inputActive]);
 
   const handleSearch = () => {
-    setInputActive(true)
-  }
+    setInputActive(true);
+  };
 
   return (
     <div>
       {
         !inputActive &&
-				<div className='slide'>
-				  <span>{title}
+				(
+				  <div className="slide">
+				    <span>{title}</span>
+				    <Button
+				      onClick={handleSearch}
+				      type="primary"
+				    >
+    搜索
 
-				  </span>
-				  <Button type="primary" onClick={handleSearch} >搜索</Button>
-				</div>
+				    </Button>
+				  </div>
+				)
       }
       {
         inputActive &&
-				<div className='slide'>
-				  <Input placeholder="请输入" ref={countRef} onChange={(e) => {setValue(e.target.value)}} />
-				  <Button type="primary" onClick={() => {setInputActive(false)}} >关闭</Button>
-				</div>
+				(
+				  <div className="slide">
+				    <Input
+				      onChange={(e) => {setValue(e.target.value);}}
+				      placeholder="请输入"
+				      ref={countRef}
+				    />
+				    <Button
+				      onClick={() => {setInputActive(false);}}
+				      type="primary"
+				    >
+    关闭
+
+				    </Button>
+				  </div>
+				)
       }
     </div>
-  )
+  );
+};
 
+FileSearch.propTypes = {
+  title: PropTypes.string,
+  onFileSearch: PropTypes.func,
+};
 
-}
-export default FileSearch
+export default FileSearch;
