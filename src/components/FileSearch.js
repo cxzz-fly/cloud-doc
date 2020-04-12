@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input } from 'antd';
 import PropTypes from 'prop-types';
 import './FileSearch.scss';
-console.log('process.env.NODE_ENV2222222', process.env.NODE_ENV);
 const FileSearch = (props) => {
   const { title, onFileSearch } = props;
   const [inputActive, setInputActive] = useState(false);
@@ -46,9 +45,7 @@ const FileSearch = (props) => {
 				    <Button
 				      onClick={handleSearch}
 				      type="primary"
-				    >
-    搜索
-
+				    >搜索
 				    </Button>
 				  </div>
 				)
@@ -65,9 +62,7 @@ const FileSearch = (props) => {
 				    <Button
 				      onClick={() => {setInputActive(false);}}
 				      type="primary"
-				    >
-    关闭
-
+				    >关闭
 				    </Button>
 				  </div>
 				)

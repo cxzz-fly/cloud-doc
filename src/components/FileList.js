@@ -18,25 +18,35 @@ const FileList = (props) => {
     editItem(index)
   }
   return (
-    <>
+    <div style={{ background: '#ddd' }}>
       <List
         size="small"
         dataSource={list}
-        renderItem={(item, index) =>
-          <List.Item onClick={
-            () => {clickListItem(index)}}>
-            <FileMarkdownFilled
-              style={{ fontSize: '16px', color: '#08c' }}  />
-            {item}
-            <div>
-              <DeleteFilled onClick={(e) => {deleteListItem(e, index)}}/>
-              <EditFilled onClick={(e) => {editListItem(e, index)}}/>
+        renderItem={(item, index) => (
+          <List.Item
+            onClick={() => {
+              clickListItem(index);
+            }}
+          >
+            <FileMarkdownFilled style={{ fontSize: '16px', color: '#08c' }} />
+            {item.title}
+            <div style={{ display: 'inline' }}>
+              <DeleteFilled
+                onClick={(e) => {
+                  deleteListItem(e, index);
+                }}
+              />
+              <EditFilled
+                onClick={(e) => {
+                  editListItem(e, index);
+                }}
+              />
             </div>
-          </List.Item>}
-
+          </List.Item>
+        )}
       />
-    </>
-  )
+    </div>
+  );
 }
 
 FileList.propTypes = {
@@ -46,6 +56,13 @@ FileList.propTypes = {
   editItem: PropTypes.func.isRequired,
 }
 FileList.defaultProps = {
-  list: []
-}
+  list: [
+    {
+      id: '2',
+      title: 'second post',
+      body: '## this is the title',
+      createdAt: 1563762965704
+    }
+  ]
+};
 export default FileList

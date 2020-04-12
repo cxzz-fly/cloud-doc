@@ -1,0 +1,30 @@
+.tablist-component {
+  .closeCircle {
+    visibility: hidden;
+  }
+  .nav-link:hover .closeCircle {
+    visibility: visible;
+  }
+  .nav-link.active .closeCircle {
+    visibility: visible;
+  }
+  .unsaved-icon {
+    display: inline-block;
+    background: #d9534f;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .withUnsaved.nav-link .closeCircle {
+    display: none;
+  }
+  .withUnsaved.nav-link:hover .closeCircle {
+    display: inline-block;
+  }
+  .withUnsaved.nav-link:hover .unsaved-icon {
+    display: none;
+  }
+  .paneTitle{
+      margin-right: 6px;
+  }
+}
