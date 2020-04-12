@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { List } from 'antd';
+import './FileList.scss'
 import {FileMarkdownFilled, DeleteFilled, EditFilled} from '@ant-design/icons';
 
 
 const FileList = (props) => {
   const { list, clickItem, deleteItem, editItem } = props
-  let clickListItem = (index) => {
-    clickItem(index)
+  let clickListItem = (id) => {
+    clickItem(id)
   }
   let deleteListItem = (e, index) => {
     e.stopPropagation()
@@ -18,14 +19,15 @@ const FileList = (props) => {
     editItem(index)
   }
   return (
-    <div style={{ background: '#ddd' }}>
+    <div className='fileListWrap'>
       <List
+        className="fileList"
         size="small"
         dataSource={list}
         renderItem={(item, index) => (
           <List.Item
             onClick={() => {
-              clickListItem(index);
+              clickListItem(item.id);
             }}
           >
             <FileMarkdownFilled style={{ fontSize: '16px', color: '#08c' }} />

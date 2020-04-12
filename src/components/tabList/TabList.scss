@@ -1,7 +1,17 @@
 .tablist-component {
+    .ant-tabs-tab{
+        padding: 0 !important
+    }
   .closeCircle {
     visibility: hidden;
+    margin-right: 0 !important;
   }
+    .nav-link{
+        padding:10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
   .nav-link:hover .closeCircle {
     visibility: visible;
   }
@@ -11,8 +21,8 @@
   .unsaved-icon {
     display: inline-block;
     background: #d9534f;
-    width: 11px;
-    height: 11px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
   }
   .withUnsaved.nav-link .closeCircle {
