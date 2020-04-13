@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { List } from 'antd';
+import classNames from 'classnames';
 import './FileList.scss'
 import {FileMarkdownFilled, DeleteFilled, EditFilled} from '@ant-design/icons';
 
 
 const FileList = (props) => {
-  const { list, clickItem, deleteItem, editItem } = props
+  const { list, clickItem, deleteItem, editItem, activeFileID } = props;
   let clickListItem = (id) => {
     clickItem(id)
   }
@@ -21,14 +22,17 @@ const FileList = (props) => {
   return (
     <div className='fileListWrap'>
       <List
-        className="fileList"
         size="small"
         dataSource={list}
-        renderItem={(item, index) => (
-          <List.Item
+        renderItem={(item, index) => {
+          let itemClass = classNames({
+            active: item.id === activeFileID
+          });
+          return <List.Item
             onClick={() => {
               clickListItem(item.id);
             }}
+            className={itemClass}
           >
             <FileMarkdownFilled style={{ fontSize: '16px', color: '#08c' }} />
             {item.title}
@@ -45,7 +49,8 @@ const FileList = (props) => {
               />
             </div>
           </List.Item>
-        )}
+
+        }}
       />
     </div>
   );
@@ -56,7 +61,8 @@ FileList.propTypes = {
   clickItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
-}
+  activeFileID: PropTypes.string
+};
 FileList.defaultProps = {
   list: [
     {

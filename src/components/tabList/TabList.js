@@ -3,20 +3,27 @@ import PropTypes from 'prop-types';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 import { CloseCircleFilled } from '@ant-design/icons';
+import SimpleMDE from 'react-simplemde-editor';
 import classNames from 'classnames';
 import './TabList.scss'
 
 let callback = (key) => {
   console.log(key);
 }
-let onTabClick = (id) => {
-  console.log('id', id);
-}
 const TabList = (props) => {
-  let { fileList, unsaveIds, activeId } = props;
+  let { fileList, unsaveIds, activeId, onTabClick } = props;
+  let onTabClickItem = (id) => {
+    onTabClick(id)
+  };
   return (
     <div className="nav nav-pills tablist-component">
-      <Tabs onChange={callback} type="card" tabBarGutter={'0'}>
+      <Tabs
+        // onChange={callback}
+        type="card"
+        tabBarGutter={'0'}
+        activeKey={activeId}
+        onTabClick={onTabClickItem}
+      >
         {fileList.map((item, index) => {
           const withUnsavedMark = unsaveIds.includes(item.id);
           const fClassName = classNames({
@@ -26,7 +33,7 @@ const TabList = (props) => {
           });
           return (
             <TabPane
-              key={index}
+              key={item.id}
               tab={
                 <span className={fClassName}>
                   <span className="paneTitle">{item.title}</span>
@@ -34,7 +41,7 @@ const TabList = (props) => {
                     className="closeCircle"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onTabClick(item.id);
+                      // onTabClick(item.id);
                     }}
                   />
                   {unsaveIds.includes(item.id) && (
@@ -43,11 +50,19 @@ const TabList = (props) => {
                 </span>
               }
             >
-              {item.body}
+              {/* {item.body} */}
+              <SimpleMDE
+                // onChange={handleChange}
+                value={item.body}
+                options={{
+                  minHeight: '400px'
+                }}
+              />
             </TabPane>
           );
         })}
       </Tabs>
+      {/* <div onClick={()=>{activeKey}</div>}>aaaaaaa</div> */}
     </div>
   );
 }
@@ -55,7 +70,8 @@ const TabList = (props) => {
 TabList.propTypes = {
   fileList: PropTypes.array,
   unsaveIds: PropTypes.array,
-  activeId: PropTypes.string
+  activeId: PropTypes.string,
+  onTabClick: PropTypes.func
 };
 TabList.defaultProps = {
   fileList: [],

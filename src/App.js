@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { Row, Col } from 'antd';
 import FileSearch from './components/FileSearch'
@@ -18,11 +18,11 @@ function App () {
   const openfiles = openFileIDs ? openFileIDs.map((openID) =>
     files.find((file) => openID === file.id)
   ) : ['']
-  const activeFile = files.find((file) => file.id === activeFileID);
+
+  // const activeFile = files.find((file) => file.id === activeFileID);
+  let activeFile = '';
   let fileClick = (fileId) => {
     setActiveFileID(fileId)
-    console.log(222, openFileIDs, fileId);
-    console.log([...openFileIDs, fileId]);
     setOpenFileIDs([...openFileIDs, fileId])
   };
   let deleteItem = (index) => {
@@ -34,10 +34,18 @@ function App () {
   let handleChange = (data) => {
     console.log(data);
   }
+  let onTabClick = (id) => {
+    setActiveFileID(id);
+  };
+
+  useEffect(() => {
+    activeFile = files.find((file) => file.id === activeFileID);
+  }, [activeFileID]);
+
   return (
     <div className="App">
       <Row>
-        <Col span={8} className='silderLeft'>
+        <Col span={8} className="silderLeft">
           <FileSearch
             onFileSearch={(value) => {
               console.log(value);
@@ -49,6 +57,7 @@ function App () {
             deleteItem={deleteItem}
             editItem={editItem}
             list={files}
+            activeFileID={activeFileID}
           />
           <FileFoot />
         </Col>
@@ -57,16 +66,19 @@ function App () {
             fileList={openfiles}
             unsaveIds={unSaveFileIDs}
             activeId={activeFileID}
+            onTabClick={onTabClick}
           />
-          {activeFile
-            ? <SimpleMDE
+          {activeFile ? (
+            <SimpleMDE
               onChange={handleChange}
               value={activeFile.body}
               options={{
                 minHeight: '400px'
               }}
-            /> : '请选择...'
-          }
+            />
+          ) : (
+            '请选择...'
+          )}
         </Col>
       </Row>
     </div>
