@@ -18,18 +18,31 @@ function App () {
   const openfiles = openFileIDs ? openFileIDs.map((openID) =>
     files.find((file) => openID === file.id)
   ) : ['']
+  console.log(222, openfiles);
 
   // const activeFile = files.find((file) => file.id === activeFileID);
   let activeFile = '';
   let fileClick = (fileId) => {
     setActiveFileID(fileId)
-    setOpenFileIDs([...openFileIDs, fileId])
+    if (!openFileIDs.includes(fileId)) {
+      setOpenFileIDs([...openFileIDs, fileId]);
+    }
   };
   let deleteItem = (index) => {
     console.log('deleteItem', index);
   }
   let editItem = (index) => {
     console.log('editItem', index);
+  }
+  // 关闭tabs
+  let onCloseTabItems = (id) => {
+    const tabsWithout = [...openFileIDs.filter((itemId) => itemId !== id)];
+    setOpenFileIDs(tabsWithout);
+    if (tabsWithout.length > 0) {
+      setActiveFileID(tabsWithout[0]);
+    } else {
+      setActiveFileID('');
+    }
   }
   let handleChange = (data) => {
     console.log(data);
@@ -67,6 +80,7 @@ function App () {
             unsaveIds={unSaveFileIDs}
             activeId={activeFileID}
             onTabClick={onTabClick}
+            onCloseTabItems={onCloseTabItems}
           />
           {activeFile ? (
             <SimpleMDE

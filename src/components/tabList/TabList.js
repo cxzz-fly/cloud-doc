@@ -11,7 +11,7 @@ let callback = (key) => {
   console.log(key);
 }
 const TabList = (props) => {
-  let { fileList, unsaveIds, activeId, onTabClick } = props;
+  let { fileList, unsaveIds, activeId, onTabClick, onCloseTabItems } = props;
   let onTabClickItem = (id) => {
     onTabClick(id)
   };
@@ -41,7 +41,7 @@ const TabList = (props) => {
                     className="closeCircle"
                     onClick={(e) => {
                       e.stopPropagation();
-                      // onTabClick(item.id);
+                      onCloseTabItems(item.id);
                     }}
                   />
                   {unsaveIds.includes(item.id) && (
@@ -71,7 +71,8 @@ TabList.propTypes = {
   fileList: PropTypes.array,
   unsaveIds: PropTypes.array,
   activeId: PropTypes.string,
-  onTabClick: PropTypes.func
+  onTabClick: PropTypes.func,
+  onCloseTabItems: PropTypes.func
 };
 TabList.defaultProps = {
   fileList: [],
